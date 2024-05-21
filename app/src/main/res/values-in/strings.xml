@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FilmKu</string>
+
+    <string name="text_login">Masuk</string>
+    <string name="text_email">Email</string>
+    <string name="text_password">Kata Sandi</string>
+    <string name="text_forgot_password"><u>Lupa Kata Sandi</u></string>
+    <string name="text_or_login_with">or login with</string>
+
+</resources>

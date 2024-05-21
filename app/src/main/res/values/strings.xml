@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MyMovie</string>
+
+    <string name="text_login">Login</string>
+    <string name="text_email">Email</string>
+    <string name="text_password">Password</string>
+    <string name="text_forgot_password"><u>Forgot Password</u></string>
+    <string name="text_or_login_with">or login with</string>
+
+</resources>
