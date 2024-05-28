@@ -114,6 +114,8 @@ reports/
 # Firebase config
 app/google-services.json
 
+app/crendentials.txt
+
 # Google's service account user
 google-service-account-user.json
 
