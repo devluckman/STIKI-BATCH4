@@ -10,7 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.man.filmku.R
-import com.man.filmku.home.MainActivity
+import com.man.filmku.main.MainActivity
 import com.man.filmku.login.LoginActivity
 
 class LandingActivity : AppCompatActivity() {

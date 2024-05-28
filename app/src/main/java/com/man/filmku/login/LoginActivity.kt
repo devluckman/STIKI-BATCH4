@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.man.filmku.R
 import com.man.filmku.databinding.ActivityLoginBinding
-import com.man.filmku.home.MainActivity
+import com.man.filmku.main.MainActivity
 import com.man.filmku.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun doLogin() {
-        val email = binding.edtEmail.editText.text.toString()
+        val email = binding.edtEmail.editText?.text.toString()
         val password = binding.edtPassword.editText.text.toString()
 
         if (email.isBlank()) {
