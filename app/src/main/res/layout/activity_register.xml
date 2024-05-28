@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".register.RegisterActivity">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="80dp"
+            android:fontFamily="@font/merriweather_black"
+            android:text="Register"
+            android:textColor="@color/black_primary"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <com.man.filmku.widget.CustomEditText
+                android:id="@+id/edt_first_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:hint_text="Enter your first name"
+                app:input_type="text"
+                app:title="First Name" />
+
+            <com.man.filmku.widget.CustomEditText
+                android:id="@+id/edt_last_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:hint_text="Enter your last name"
+                app:input_type="text"
+                app:title="Last Name" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.man.filmku.widget.CustomEditText
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hint_text="Enter your email"
+            app:input_type="email"
+            app:title="Email" />
+
+        <com.man.filmku.widget.CustomEditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hint_text="Enter your password"
+            app:input_type="password"
+            app:title="Password" />
+
+        <com.man.filmku.widget.CustomEditText
+            android:id="@+id/edt_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hint_text="Enter your confirm password"
+            app:input_type="password"
+            app:title="Confirm Password" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_register"
+            style="@style/Gabarito.Regular"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="16dp"
+            android:backgroundTint="@color/portage"
+            android:text="Create Account"
+            android:textColor="@color/white" />
+
+        <TextView
+            style="@style/Gabarito.Regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginVertical="16dp"
+            android:gravity="center"
+            tools:text="By continuing, you agree to our Terms of Service and Privacy Policy." />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</ScrollView>

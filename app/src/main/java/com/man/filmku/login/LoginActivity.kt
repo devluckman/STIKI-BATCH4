@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.man.filmku.R
 import com.man.filmku.databinding.ActivityLoginBinding
 import com.man.filmku.home.MainActivity
+import com.man.filmku.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -33,9 +34,15 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnLoginGoogle.setOnClickListener {
-            doRegister()
+
         }
+
+        binding.btnRegister.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+
     }
+
 
     private fun doLogin() {
         val email = binding.edtEmail.editText.text.toString()
