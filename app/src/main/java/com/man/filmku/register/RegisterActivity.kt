@@ -1,8 +1,10 @@
 package com.man.filmku.register
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -11,13 +13,13 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.man.filmku.R
 import com.man.filmku.databinding.ActivityRegisterBinding
+import com.man.filmku.login.LoginActivity
 import com.man.filmku.model.UserData
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityRegisterBinding
-    private lateinit var firebaseAuth: FirebaseAuth
-
+    private val viewModel : RegisterViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -30,75 +32,26 @@ class RegisterActivity : AppCompatActivity() {
         }
 
 
-        firebaseAuth = FirebaseAuth.getInstance()
-        binding.btnRegister.setOnClickListener {
-            doRegister()
-        }
-    }
-
-    private fun doRegister() {
-        val firstName = binding.edtFirstName.editText.text.toString()
-        val lastName = binding.edtLastName.editText.text.toString()
-        val fullName = "$firstName $lastName"
-        val email = binding.edtEmail.editText.text.toString()
-        val password = binding.edtPassword.editText.text.toString()
-        val confirmPass = binding.edtConfirmPassword.editText.text.toString()
-
-        var isValid = true
-
-        if (firstName.isBlank()) {
-            isValid = false
-            binding.edtFirstName.setError("First Tidak Boleh Kosong")
+        viewModel.stateRegisterSuccess.observe(this) {
+            if (it) {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
         }
 
-        if (email.isBlank()) {
-            isValid = false
-            binding.edtEmail.setError("Email Tidak Boleh Kosong")
-        }
+        binding.apply {
 
-        if (password.isBlank()) {
-            isValid = false
-            binding.edtPassword.setError("Password Tidak Boleh Kosong")
-        }
-
-        if (confirmPass.isBlank()) {
-            isValid = false
-            binding.edtConfirmPassword.setError("Password Tidak Boleh Kosong")
-        }
-
-        if (password != confirmPass) {
-            isValid = false
-            binding.edtConfirmPassword.setError("Confirm Password Tidak Sama")
-        }
-
-        if (isValid) {
-            createAccount(fullName, email, password)
-        }
-    }
-
-
-    private fun createAccount(name : String, email : String, password : String) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-
-                // Save to FireStore
-                val data = UserData(
-                    name = name,
-                    email = email
+            btnRegister.setOnClickListener {
+                viewModel.doRegister(
+                    email = edtEmail.editText.text.toString(),
+                    password = edtPassword.editText.text.toString(),
+                    firstName = edtFirstName.editText.text.toString(),
+                    lastName = edtLastName.editText.text.toString(),
+                    confirmPass = edtConfirmPassword.editText.text.toString()
                 )
-                val uid = it.user?.uid ?: ""
-                Firebase.firestore.collection("users")
-                    .document(uid)
-                    .set(data)
-                    .addOnSuccessListener {
-
-                        Toast.makeText(this, "Register Succes", Toast.LENGTH_LONG).show()
-                        finish()
-                    }
-
             }
-            .addOnFailureListener {
-                it.printStackTrace()
-            }
+
+        }
+
     }
 }
