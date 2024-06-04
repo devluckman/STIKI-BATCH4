@@ -6,16 +6,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.google.firebase.auth.FirebaseAuth
 import com.man.filmku.R
 import com.man.filmku.databinding.FragmentHomeBinding
 import com.man.filmku.landing.LandingActivity
+import com.man.filmku.main.adapter.AdapterNowShowing
+import com.man.filmku.main.adapter.AdapterPopular
+import com.man.filmku.model.movie.MovieData
 
 class HomeFragment : Fragment() {
 
     private lateinit var _binding : FragmentHomeBinding
     val binding get() = _binding
 
+    val viewModel : HomeViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,6 +30,8 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    private var adapterNowShowing : AdapterNowShowing? = null
+    private var adapterPopular : AdapterPopular? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,6 +42,22 @@ class HomeFragment : Fragment() {
             goToSplash()
         }
 
+        adapterNowShowing = AdapterNowShowing()
+        binding.rvNowShowing.adapter = adapterNowShowing
+
+        adapterPopular = AdapterPopular()
+        binding.rvPopular.adapter = adapterPopular
+
+        viewModel.nowShowingMovies.observe(viewLifecycleOwner) {
+            adapterNowShowing?.setData(it)
+        }
+
+        viewModel.nowPopularMovies.observe(viewLifecycleOwner) {
+            adapterPopular?.setData(it)
+        }
+
+        viewModel.getNowShowing()
+        viewModel.getPopular()
     }
 
 

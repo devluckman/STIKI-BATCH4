@@ -47,10 +47,13 @@ class LoginViewModel : ViewModel() {
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 // Action Success
+                Log.d("TEST", "loginToFirebase Success")
                 _stateLoginSuccess.value = true
             }
             .addOnFailureListener {
                 // Action Failed
+                Log.d("TEST", "loginToFirebase Failed")
+                it.printStackTrace()
                 _stateLoginSuccess.value = false
             }
     }
