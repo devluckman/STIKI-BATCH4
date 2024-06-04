@@ -19,21 +19,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:background="@color/accent_blue"
+
+    <com.man.filmku.widget.CustomBottomNavigation
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"/>
-
-
-    <Button
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/button_logout"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logout"
-        android:layout_margin="24dp"/>
+        android:elevation="1dp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

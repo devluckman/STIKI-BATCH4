@@ -11,12 +11,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.man.filmku.R
 import com.man.filmku.databinding.ActivityMainBinding
 import com.man.filmku.landing.LandingActivity
+import com.man.filmku.main.bookmark.BookmarkFragment
 import com.man.filmku.main.home.HomeFragment
+import com.man.filmku.widget.CustomBottomNavigation
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
-    private lateinit var firebaseAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,15 +29,20 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        firebaseAuth = FirebaseAuth.getInstance()
+        binding.bottomNavigation.listerPositionNavigation(
 
-        binding.buttonLogout.setOnClickListener {
+            callback = object : CustomBottomNavigation.CallbackNav {
+                override fun onPagePosition(menu: CustomBottomNavigation.MenuNavigation) {
 
-            firebaseAuth.signOut()
+                    val fragment = when (menu) {
+                        CustomBottomNavigation.MenuNavigation.HOME -> HomeFragment.newInstance()
+                        CustomBottomNavigation.MenuNavigation.BOOKMARK -> BookmarkFragment.newInstance()
+                    }
 
-            startActivity(Intent(this, LandingActivity::class.java))
-            finish()
-        }
+                    inflateFragment(fragment)
+                }
+            }
+        )
 
         inflateFragment(HomeFragment.newInstance())
     }
@@ -47,4 +53,5 @@ class MainActivity : AppCompatActivity() {
         transaction.addToBackStack(null)
         transaction.commit()
     }
+
 }

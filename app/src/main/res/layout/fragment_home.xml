@@ -3,19 +3,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".main.home.HomeFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize">
+        android:layout_height="?actionBarSize"
+        android:layout_marginHorizontal="16dp"
+        android:gravity="center_vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
-
-            android:layout_gravity="center_vertical"
+            android:id="@+id/btn_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu"/>
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/ic_menu" />
+
+        <TextView
+            style="@style/MerriWeather.Bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="FilmKu"
+            android:textSize="16sp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/ic_notification" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
 
 </LinearLayout>
