@@ -31,10 +31,10 @@ class LandingActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
 
-            if (viewModel.firebaseUser == null) {
-                startActivity(Intent(this, LoginActivity::class.java))
-            } else {
+            if (viewModel.isLogin) {
                 startActivity(Intent(this, MainActivity::class.java))
+            } else {
+                startActivity(Intent(this, LoginActivity::class.java))
             }
 
         }, 2000)

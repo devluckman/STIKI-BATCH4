@@ -7,13 +7,16 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.man.filmku.data.repository.RepositoryImpl
 import com.man.filmku.domain.model.UserData
+import com.man.filmku.domain.repository.Repository
+import com.man.filmku.domain.resource.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
+    private val repository: Repository
 ) : ViewModel() {
 
     private val _stateEmailError = MutableLiveData<String?>(null)
@@ -69,27 +72,14 @@ class RegisterViewModel @Inject constructor(
 
 
     private fun createAccount(name: String, email: String, password: String) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
+        repository.doRegister(password = password, name = name, email = email) { data ->
 
-                // Save to FireStore
-                val data = UserData(
-                    name = name,
-                    email = email
-                )
-                val uid = it.user?.uid ?: ""
-                Firebase.firestore.collection("users")
-                    .document(uid)
-                    .set(data)
-                    .addOnSuccessListener {
-                        _stateRegisterSuccess.value = true
-                    }
+            _stateRegisterSuccess.value = when(data) {
+                is Resource.Success -> true
+                is Resource.Error -> false
+            }
 
-            }
-            .addOnFailureListener {
-                it.printStackTrace()
-                _stateRegisterSuccess.value = false
-            }
+        }
     }
 
 }

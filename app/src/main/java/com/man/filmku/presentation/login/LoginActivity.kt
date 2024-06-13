@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import com.google.firebase.auth.FirebaseAuth
 import com.man.filmku.R
+import com.man.filmku.base.BaseActivity
 import com.man.filmku.databinding.ActivityLoginBinding
 import com.man.filmku.presentation.main.MainActivity
 import com.man.filmku.presentation.register.RegisterActivity
@@ -19,21 +20,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity<ActivityLoginBinding>(
+    ActivityLoginBinding::inflate
+) {
 
-    private lateinit var binding: ActivityLoginBinding
     val viewModel: LoginViewModel by viewModels()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        enableEdgeToEdge()
-        setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
+    override fun onViewReady() {
         viewModel.stateEmailError.observe(this) { messageError ->
             if (messageError != null) {
                 binding.edtEmail.setError(messageError)
@@ -76,7 +69,6 @@ class LoginActivity : AppCompatActivity() {
         viewModel.sampleData.observe(this) {
             binding.tvSampleData.text = it
         }
-
     }
 
     private fun goToHome() {
@@ -84,5 +76,6 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
 
 }

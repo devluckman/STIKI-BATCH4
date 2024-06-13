@@ -1,23 +1,30 @@
 package com.man.filmku.presentation.main.bookmark
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.man.filmku.R
+import androidx.fragment.app.viewModels
+import com.man.filmku.base.BaseFragment
+import com.man.filmku.databinding.FragmentBookmarkBinding
+import com.man.filmku.presentation.main.adapter.AdapterPopular
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BookmarkFragment : Fragment() {
+class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(
+    FragmentBookmarkBinding::inflate
+) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bookmark, container, false)
+    val viewModel : BookmarkViewModel by viewModels()
+    override fun onViewReady() {
+
+        val adapter = AdapterPopular()
+        binding.rvPopular.adapter = adapter
+
+        viewModel.bookmarkMovie.observe(viewLifecycleOwner) {
+            adapter.setData(it)
+        }
+
+        viewModel.getBookmark()
+
     }
+
 
     companion object {
         /**

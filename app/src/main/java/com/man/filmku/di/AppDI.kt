@@ -1,6 +1,8 @@
 package com.man.filmku.di
 
 import com.google.firebase.auth.FirebaseAuth
+import com.man.filmku.data.repository.RepositoryImpl
+import com.man.filmku.domain.repository.Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,5 +17,12 @@ object AppDI {
         return FirebaseAuth.getInstance()
     }
 
+
+    @Provides
+    fun providesRepository(
+        firebaseAuth: FirebaseAuth
+    ) : Repository {
+        return RepositoryImpl(firebaseAuth)
+    }
 
 }

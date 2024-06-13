@@ -1,18 +1,22 @@
 package com.man.filmku.domain.repository
 
+import com.man.filmku.domain.model.movie.MovieData
+import com.man.filmku.domain.resource.Resource
+import kotlinx.coroutines.flow.Flow
+
 interface Repository {
 
     // Splash
-    val isLogin : Boolean
+    val isLogin: Boolean
 
     // Page Login
-    fun doLogin(email : String, password : String)
+    fun doLogin(email: String, password: String, callback: (Resource<Boolean>) -> Unit)
 
     // Page Register
-    fun doRegister(email : String, name : String)
+    fun doRegister(password : String, email: String, name: String, callback: (Resource<Boolean>) -> Unit)
 
-    fun getMovieNowShowing()
+    fun getMovieNowShowing() : List<MovieData>
 
-    fun getMoviePopular()
+    fun getMoviePopular() : List<MovieData>
 
 }

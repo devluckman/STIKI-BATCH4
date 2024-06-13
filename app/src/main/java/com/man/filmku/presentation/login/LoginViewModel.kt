@@ -1,24 +1,24 @@
 package com.man.filmku.presentation.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseAuth
+import com.man.filmku.domain.repository.Repository
+import com.man.filmku.domain.resource.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
-)  : ViewModel() {
+    private val repository: Repository
+) : ViewModel() {
 
     private val _stateEmailError = MutableLiveData<String?>(null)
-    val stateEmailError : LiveData<String?> = _stateEmailError
+    val stateEmailError: LiveData<String?> = _stateEmailError
 
 
     private val _statePasswordError = MutableLiveData<String?>(null)
-    val statePasswordError : LiveData<String?> = _statePasswordError
+    val statePasswordError: LiveData<String?> = _statePasswordError
 
     fun doLogin(email: String, password: String) {
 
@@ -36,29 +36,24 @@ class LoginViewModel @Inject constructor(
     }
 
     private val _sampleData = MutableLiveData<String?>(null)
-    val sampleData : LiveData<String?> = _sampleData
+    val sampleData: LiveData<String?> = _sampleData
 
-    fun setData(data : String) {
-        Log.d("TEST", "CHECK DATA $data")
+    fun setData(data: String) {
         _sampleData.value = data
     }
 
     private val _stateLoginSuccess = MutableLiveData<Boolean>()
     val stateLoginSuccess = _stateLoginSuccess
 
-    private fun loginToFirebase(email : String, password : String) {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                // Action Success
-                Log.d("TEST", "loginToFirebase Success")
-                _stateLoginSuccess.value = true
+    private fun loginToFirebase(email: String, password: String) {
+        repository.doLogin(email, password) { data ->
+
+            _stateLoginSuccess.value = when (data) {
+                is Resource.Success -> true
+                is Resource.Error -> false
             }
-            .addOnFailureListener {
-                // Action Failed
-                Log.d("TEST", "loginToFirebase Failed")
-                it.printStackTrace()
-                _stateLoginSuccess.value = false
-            }
+
+        }
     }
 
 }
