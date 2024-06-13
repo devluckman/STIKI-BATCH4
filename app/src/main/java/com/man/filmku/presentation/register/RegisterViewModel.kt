@@ -1,4 +1,4 @@
-package com.man.filmku.register
+package com.man.filmku.presentation.register
 
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -7,15 +7,17 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.man.filmku.model.UserData
+import com.man.filmku.domain.model.UserData
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class RegisterViewModel : ViewModel() {
-
-    private val firebaseAuth = FirebaseAuth.getInstance()
+@HiltViewModel
+class RegisterViewModel @Inject constructor(
+    private val firebaseAuth: FirebaseAuth
+) : ViewModel() {
 
     private val _stateEmailError = MutableLiveData<String?>(null)
     val stateEmailError: LiveData<String?> = _stateEmailError
-
 
     private val _statePasswordError = MutableLiveData<String?>(null)
     val statePasswordError: LiveData<String?> = _statePasswordError

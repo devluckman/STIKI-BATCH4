@@ -1,4 +1,4 @@
-package com.man.filmku.login
+package com.man.filmku.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,10 +13,12 @@ import androidx.core.widget.addTextChangedListener
 import com.google.firebase.auth.FirebaseAuth
 import com.man.filmku.R
 import com.man.filmku.databinding.ActivityLoginBinding
-import com.man.filmku.main.MainActivity
-import com.man.filmku.register.RegisterActivity
+import com.man.filmku.presentation.main.MainActivity
+import com.man.filmku.presentation.register.RegisterActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding

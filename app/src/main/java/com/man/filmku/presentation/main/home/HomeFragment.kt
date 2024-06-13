@@ -1,4 +1,4 @@
-package com.man.filmku.main.home
+package com.man.filmku.presentation.main.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,11 +10,13 @@ import androidx.fragment.app.viewModels
 import com.google.firebase.auth.FirebaseAuth
 import com.man.filmku.R
 import com.man.filmku.databinding.FragmentHomeBinding
-import com.man.filmku.landing.LandingActivity
-import com.man.filmku.main.adapter.AdapterNowShowing
-import com.man.filmku.main.adapter.AdapterPopular
-import com.man.filmku.model.movie.MovieData
+import com.man.filmku.presentation.landing.LandingActivity
+import com.man.filmku.presentation.main.adapter.AdapterNowShowing
+import com.man.filmku.presentation.main.adapter.AdapterPopular
+import com.man.filmku.domain.model.movie.MovieData
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var _binding : FragmentHomeBinding

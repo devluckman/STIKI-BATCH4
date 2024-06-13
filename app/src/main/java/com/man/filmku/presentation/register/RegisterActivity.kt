@@ -1,4 +1,4 @@
-package com.man.filmku.register
+package com.man.filmku.presentation.register
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,9 +13,11 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.man.filmku.R
 import com.man.filmku.databinding.ActivityRegisterBinding
-import com.man.filmku.login.LoginActivity
-import com.man.filmku.model.UserData
+import com.man.filmku.presentation.login.LoginActivity
+import com.man.filmku.domain.model.UserData
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityRegisterBinding

@@ -1,4 +1,4 @@
-package com.man.filmku.main
+package com.man.filmku.presentation.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,11 +10,13 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.man.filmku.R
 import com.man.filmku.databinding.ActivityMainBinding
-import com.man.filmku.landing.LandingActivity
-import com.man.filmku.main.bookmark.BookmarkFragment
-import com.man.filmku.main.home.HomeFragment
+import com.man.filmku.presentation.landing.LandingActivity
+import com.man.filmku.presentation.main.bookmark.BookmarkFragment
+import com.man.filmku.presentation.main.home.HomeFragment
 import com.man.filmku.widget.CustomBottomNavigation
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding

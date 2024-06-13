@@ -1,4 +1,4 @@
-package com.man.filmku.model.movie
+package com.man.filmku.domain.model.movie
 
 data class MovieData (
     val image : String,

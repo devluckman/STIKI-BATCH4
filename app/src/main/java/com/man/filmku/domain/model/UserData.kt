@@ -1,4 +1,4 @@
-package com.man.filmku.model
+package com.man.filmku.domain.model
 
 data class UserData(
     val name : String,

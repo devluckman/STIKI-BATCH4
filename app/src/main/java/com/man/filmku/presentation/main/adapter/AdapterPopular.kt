@@ -1,17 +1,17 @@
-package com.man.filmku.main.adapter
+package com.man.filmku.presentation.main.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.man.filmku.databinding.ItemNowPlayingBinding
-import com.man.filmku.model.movie.MovieData
+import com.man.filmku.databinding.ItemPopularBinding
+import com.man.filmku.domain.model.movie.MovieData
 
-class AdapterNowShowing : RecyclerView.Adapter<AdapterNowShowing.ViewHolder>() {
+class AdapterPopular : RecyclerView.Adapter<AdapterPopular.ViewHolder>() {
 
     private val dataList = mutableListOf<MovieData>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemNowPlayingBinding.inflate(
+        val binding = ItemPopularBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
 
@@ -33,7 +33,7 @@ class AdapterNowShowing : RecyclerView.Adapter<AdapterNowShowing.ViewHolder>() {
 
 
     class ViewHolder(
-        private val binding: ItemNowPlayingBinding
+        private val binding: ItemPopularBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data : MovieData) {
