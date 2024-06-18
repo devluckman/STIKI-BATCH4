@@ -1,73 +1,55 @@
 package com.man.filmku.presentation.main.home
 
 import android.content.Intent
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
-import com.google.firebase.auth.FirebaseAuth
-import com.man.filmku.R
+import com.man.filmku.base.BaseFragment
 import com.man.filmku.databinding.FragmentHomeBinding
+import com.man.filmku.domain.model.movie.MovieData
 import com.man.filmku.presentation.landing.LandingActivity
 import com.man.filmku.presentation.main.adapter.AdapterNowShowing
 import com.man.filmku.presentation.main.adapter.AdapterPopular
-import com.man.filmku.domain.model.movie.MovieData
+import com.man.filmku.presentation.detail.DetailActivity
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.RuntimeException
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(
+    FragmentHomeBinding::inflate
+) {
 
-    private lateinit var _binding : FragmentHomeBinding
-    val binding get() = _binding
+    private val viewModel: HomeViewModel by viewModels()
+    private val adapterNowShowing by lazy { AdapterNowShowing(::openDetail) }
+    private val adapterPopular by lazy { AdapterPopular(::openDetail) }
 
-    val viewModel : HomeViewModel by viewModels()
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    private var adapterNowShowing : AdapterNowShowing? = null
-    private var adapterPopular : AdapterPopular? = null
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val firebaseAuth = FirebaseAuth.getInstance()
-        binding.btnLogout.setOnClickListener {
-            firebaseAuth.signOut()
-            goToSplash()
-        }
-
-        adapterNowShowing = AdapterNowShowing()
+    override fun onViewReady() {
         binding.rvNowShowing.adapter = adapterNowShowing
-
-        adapterPopular = AdapterPopular()
         binding.rvPopular.adapter = adapterPopular
-
-        viewModel.nowShowingMovies.observe(viewLifecycleOwner) {
-            adapterNowShowing?.setData(it)
+        binding.btnLogout.setOnClickListener {
+            goToLogout()
+            // throw RuntimeException("Test Crash")
+        }
+        viewModel.nowPlayingData.observe(this) {
+            adapterNowShowing.setData(it.orEmpty())
         }
 
-        viewModel.nowPopularMovies.observe(viewLifecycleOwner) {
-            adapterPopular?.setData(it)
+        viewModel.popularData.observe(this) {
+            adapterPopular.setData(it.orEmpty())
         }
-
-        viewModel.getNowShowing()
-        viewModel.getPopular()
     }
 
-
-    private fun goToSplash() {
-        val intent = Intent(context, LandingActivity::class.java)
-        startActivity(intent)
-        activity?.finish()
+    private fun goToLogout() {
+        activity?.apply {
+            viewModel.logout()
+            startActivity(Intent(this, LandingActivity::class.java))
+            finish()
+        }
     }
+
+    private fun openDetail(data : MovieData) {
+         DetailActivity.newInstance(context, data.id)
+    }
+
 
     companion object {
         /**

@@ -11,6 +11,7 @@ import javax.inject.Inject
 class LandingViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
-    val isLogin : Boolean get() = repository.isLogin
+
+    val isLogin : Boolean get() = true
 
 }

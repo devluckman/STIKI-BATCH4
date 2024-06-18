@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.man.filmku.databinding.ItemPopularBinding
 import com.man.filmku.domain.model.movie.MovieData
 
-class AdapterPopular : RecyclerView.Adapter<AdapterPopular.ViewHolder>() {
+class AdapterPopular(
+    private val onClick : (MovieData) -> Unit
+) : RecyclerView.Adapter<AdapterPopular.ViewHolder>() {
 
     private val dataList = mutableListOf<MovieData>()
 
@@ -22,7 +24,7 @@ class AdapterPopular : RecyclerView.Adapter<AdapterPopular.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = dataList[position]
-        holder.bind(data)
+        holder.bind(data, onClick)
     }
 
     fun setData(data : List<MovieData>) {
@@ -36,11 +38,13 @@ class AdapterPopular : RecyclerView.Adapter<AdapterPopular.ViewHolder>() {
         private val binding: ItemPopularBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data : MovieData) {
+        fun bind(data : MovieData, onClick : (MovieData) -> Unit) {
 
             binding.tvTitle.text = data.title
             binding.tvRating.text = data.rating
-
+            binding.root.setOnClickListener {
+                onClick.invoke(data)
+            }
         }
 
     }

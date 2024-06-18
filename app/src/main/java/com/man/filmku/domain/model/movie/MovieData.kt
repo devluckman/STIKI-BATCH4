@@ -3,7 +3,8 @@ package com.man.filmku.domain.model.movie
 data class MovieData (
     val image : String,
     val title : String,
-    val rating : String
+    val rating : String,
+    val id : Int = 0
 ) {
 
 

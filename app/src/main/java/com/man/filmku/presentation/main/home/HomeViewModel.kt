@@ -3,9 +3,11 @@ package com.man.filmku.presentation.main.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.man.filmku.domain.model.movie.MovieData
 import com.man.filmku.domain.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -13,20 +15,33 @@ class HomeViewModel @Inject constructor(
     private val repository: Repository
 ): ViewModel() {
 
-    private val _nowShowingMovies = MutableLiveData<List<MovieData>>()
-    val nowShowingMovies : LiveData<List<MovieData>> = _nowShowingMovies
-
-    fun getNowShowing() {
-        // TODO Action get to API
-        _nowShowingMovies.value = repository.getMovieNowShowing()
+    private val _nowPlayingData = MutableLiveData<List<MovieData>>()
+    val nowPlayingData = _nowPlayingData
+    private fun getNowPlaying() {
+        viewModelScope.launch {
+            repository.getNowPlayingMovie().collect {
+                _nowPlayingData.value = it
+            }
+        }
     }
 
-    private val _nowPopularMovies = MutableLiveData<List<MovieData>>()
-    val nowPopularMovies : LiveData<List<MovieData>> = _nowPopularMovies
+    private val _popularData = MutableLiveData<List<MovieData>>()
+    val popularData = _popularData
+    private fun getPopular() {
+        viewModelScope.launch {
+            repository.getPopularMovie().collect {
+                _popularData.value = it
+            }
+        }
+    }
 
-    fun getPopular() {
-        // TODO Action get to API
-        _nowPopularMovies.value = repository.getMoviePopular()
+    fun logout() {
+        repository.logout()
+    }
+
+    init {
+        getNowPlaying()
+        getPopular()
     }
 
 }

@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.man.filmku.databinding.ItemNowPlayingBinding
 import com.man.filmku.domain.model.movie.MovieData
 
-class AdapterNowShowing : RecyclerView.Adapter<AdapterNowShowing.ViewHolder>() {
+class AdapterNowShowing(
+    private val onClick : (MovieData) -> Unit
+) : RecyclerView.Adapter<AdapterNowShowing.ViewHolder>() {
 
     private val dataList = mutableListOf<MovieData>()
 
@@ -22,7 +24,7 @@ class AdapterNowShowing : RecyclerView.Adapter<AdapterNowShowing.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = dataList[position]
-        holder.bind(data)
+        holder.bind(data, onClick)
     }
 
     fun setData(data : List<MovieData>) {
@@ -36,10 +38,14 @@ class AdapterNowShowing : RecyclerView.Adapter<AdapterNowShowing.ViewHolder>() {
         private val binding: ItemNowPlayingBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data : MovieData) {
+        fun bind(data : MovieData, onClick : (MovieData) -> Unit) {
 
             binding.tvTitle.text = data.title
             binding.tvRating.text = data.rating
+
+            binding.root.setOnClickListener {
+                onClick.invoke(data)
+            }
 
         }
 
